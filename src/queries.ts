@@ -8,26 +8,29 @@ const focusableSelector = [
   '[tabindex]',
 ].join(',')
 
-export function findFocusable($parent, filterFn = () => true) {
+export function findFocusable(
+  $parent: HTMLElement,
+  filterFn: (el: HTMLElement) => boolean = () => true,
+): HTMLElement[] {
   if (!$parent || typeof $parent.querySelectorAll !== 'function') {
     return []
   }
 
-  let matches = $parent.querySelectorAll(focusableSelector)
+  const matches = $parent.querySelectorAll<HTMLElement>(focusableSelector)
 
-  return [...matches].filter($el => filterFn($el) && visible($el))
+  return Array.from(matches).filter($el => filterFn($el) && visible($el))
 }
 
-export function findTabbable($parent) {
+export function findTabbable($parent: HTMLElement): HTMLElement[] {
   return findFocusable($parent, hasValidTabIndex)
 }
 
-function hasValidTabIndex($el) {
-  const tabIndex = $el.getAttribute('tabindex')
+function hasValidTabIndex($el: HTMLElement): boolean {
+  const tabIndex = Number($el.getAttribute('tabindex'))
   return isNaN(tabIndex) || tabIndex >= 0
 }
 
-function visible($el) {
+function visible($el: HTMLElement): boolean {
   let $currentEl = $el
   while ($currentEl) {
     // Stop traversing up the hierarchy at the document body.
@@ -40,13 +43,13 @@ function visible($el) {
       return false
     }
 
-    $currentEl = $currentEl.parentNode
+    $currentEl = $currentEl.parentNode as HTMLElement
   }
 
   return true
 }
 
-function hidden($el) {
+function hidden($el: HTMLElement): boolean {
   const style = window.getComputedStyle($el)
   return (
     (style.display !== 'inline' && $el.offsetWidth <= 0 && $el.offsetHeight <= 0) ||

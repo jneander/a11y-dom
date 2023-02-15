@@ -3,7 +3,7 @@ import {createContainer} from '@jneander/spec-utils-dom'
 import * as queries from '../queries'
 
 describe('Queries', () => {
-  let $container
+  let $container: HTMLElement
 
   beforeEach(() => {
     $container = createContainer()
@@ -39,8 +39,8 @@ describe('Queries', () => {
     $container.remove()
   })
 
-  function getById(id) {
-    return $container.querySelector(`#${id}`)
+  function getById<T extends HTMLElement>(id: string) {
+    return $container.querySelector<T>(`#${id}`)
   }
 
   describe('.findFocusable()', () => {
@@ -67,7 +67,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled buttons', () => {
-      const $button = getById('button')
+      const $button = getById<HTMLButtonElement>('button')
       $button.disabled = true
       expect(findFocusable()).not.to.include($button)
     })
@@ -77,7 +77,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled text inputs', () => {
-      const $input = getById('text-input')
+      const $input = getById<HTMLInputElement>('text-input')
       $input.disabled = true
       expect(findFocusable()).not.to.include($input)
     })
@@ -87,7 +87,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled hidden inputs', () => {
-      const $input = getById('hidden-input')
+      const $input = getById<HTMLInputElement>('hidden-input')
       $input.disabled = true
       expect(findFocusable()).not.to.include($input)
     })
@@ -97,7 +97,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled search inputs', () => {
-      const $input = getById('search-input')
+      const $input = getById<HTMLInputElement>('search-input')
       $input.disabled = true
       expect(findFocusable()).not.to.include($input)
     })
@@ -107,7 +107,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled select fields', () => {
-      const $field = getById('select')
+      const $field = getById<HTMLSelectElement>('select')
       $field.disabled = true
       expect(findFocusable()).not.to.include($field)
     })
@@ -117,7 +117,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled textarea fields', () => {
-      const $field = getById('textarea')
+      const $field = getById<HTMLTextAreaElement>('textarea')
       $field.disabled = true
       expect(findFocusable()).not.to.include($field)
     })
@@ -167,7 +167,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled buttons', () => {
-      const $button = getById('button')
+      const $button = getById<HTMLButtonElement>('button')
       $button.disabled = true
       expect(findTabbable()).not.to.include($button)
     })
@@ -177,7 +177,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled text inputs', () => {
-      const $input = getById('text-input')
+      const $input = getById<HTMLInputElement>('text-input')
       $input.disabled = true
       expect(findTabbable()).not.to.include($input)
     })
@@ -187,7 +187,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled hidden inputs', () => {
-      const $input = getById('hidden-input')
+      const $input = getById<HTMLInputElement>('hidden-input')
       $input.disabled = true
       expect(findTabbable()).not.to.include($input)
     })
@@ -197,7 +197,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled search inputs', () => {
-      const $input = getById('search-input')
+      const $input = getById<HTMLInputElement>('search-input')
       $input.disabled = true
       expect(findTabbable()).not.to.include($input)
     })
@@ -207,7 +207,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled select fields', () => {
-      const $field = getById('select')
+      const $field = getById<HTMLSelectElement>('select')
       $field.disabled = true
       expect(findTabbable()).not.to.include($field)
     })
@@ -217,7 +217,7 @@ describe('Queries', () => {
     })
 
     it('excludes disabled textarea fields', () => {
-      const $field = getById('textarea')
+      const $field = getById<HTMLTextAreaElement>('textarea')
       $field.disabled = true
       expect(findTabbable()).not.to.include($field)
     })
