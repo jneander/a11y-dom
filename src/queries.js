@@ -5,7 +5,7 @@ const focusableSelector = [
   'select:not([disabled])',
   'textarea:not([disabled])',
   'iframe',
-  '[tabindex]'
+  '[tabindex]',
 ].join(',')
 
 export function findFocusable($parent, filterFn = () => true) {
